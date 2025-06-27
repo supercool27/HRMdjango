@@ -1,0 +1,15 @@
+[build]
+builder = "NIXPACKS"
+
+[deploy]
+startCommand = "gunicorn django_postgres_railway.wsgi"
+
+[deploy.preDeploy]
+commands = [
+  "python manage.py collectstatic --noinput",
+  "python manage.py migrate --noinput"
+]
+
+[variables]
+DJANGO_SECRET_KEY = "django-insecure-gO1pHXkcubPQ1ZtkCcGsueFLQRHMe3dHkXwqWYpb2eNoMmKHRDTh1hWdJRLXBMF1w4g"
+DEBUG = "False"
