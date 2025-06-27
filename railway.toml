@@ -2,7 +2,7 @@
 builder = "NIXPACKS"
 
 [deploy]
-startCommand = "gunicorn django_postgres_railway.wsgi"
+startCommand = "gunicorn mysite.wsgi"
 
 [deploy.preDeploy]
 commands = [
