@@ -17,10 +17,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'accounts',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
 ]
 
 
@@ -33,7 +29,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -63,21 +58,6 @@ DATABASES = {
     }
 }
 
-SITE_ID = 1
-
-AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
-)
-
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'SCOPE': ['profile', 'email'],
-        'AUTH_PARAMS': {'access_type': 'online'},
-        'CLIENT_ID': '3395635071878-pcrdc7i6reorhrjt3c04tu02ouns801g.apps.googleusercontent.com',
-        'SECRET': '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',
-    }
-}
 
 AUTH_PASSWORD_VALIDATORS = []
 
