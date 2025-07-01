@@ -1,3 +1,4 @@
 django>=4.2,<5
 gunicorn
 whitenoise
+PyJWT>=2.0.0
