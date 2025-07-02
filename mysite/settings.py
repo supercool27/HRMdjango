@@ -19,8 +19,6 @@ INSTALLED_APPS = [
     'accounts',
 ]
 
-
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -80,4 +78,6 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
+CSRF_TRUSTED_ORIGINS = [
+    'https://hrmdjango-production.up.railway.app',
+]
