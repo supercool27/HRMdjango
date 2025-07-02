@@ -5,6 +5,10 @@ from django.contrib.auth import get_user_model
 def login_view(request):
     return render(request, 'accounts/login.html')
 
+
+def dashboard_view(request):
+    return render(request, 'accounts/dashboard.html')\
+
 def signup_view(request):
     return render(request, 'accounts/signup.html')
 
@@ -32,7 +36,7 @@ def register_view(request):
         if User.objects.filter(username=email).exists():
             messages.error(request, "⚠️ A user with this email already exists.")
             return render(request, 'accounts/signup.html', context)
-    
+
     
         user = User.objects.create_user(
             username=email,
