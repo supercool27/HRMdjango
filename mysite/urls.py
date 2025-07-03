@@ -10,4 +10,13 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home),
     path('accounts/', include('accounts.urls')),
+    # path('employees/', include('employees.urls')),
+    # path('attendance/', include('attendance.urls')),
+    # path('leave/', include('leave.urls')),
+    # path('payroll/', include('payroll.urls')),
+    # path('recruitment/', include('recruitment.urls')),
+    # path('performance/', include('performance.urls')),
+    # path('training/', include('training.urls')),
+    # path('documents/', include('documents.urls')),
+    # path('settings/', include('settings.urls')),
 ]
