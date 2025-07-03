@@ -5,7 +5,6 @@ from django.contrib.auth import get_user_model
 def login_view(request):
     return render(request, 'accounts/login.html')
 
-
 def dashboard_view(request):
     return render(request, 'accounts/dashboard.html')\
 
@@ -49,5 +48,3 @@ def register_view(request):
         return render(request, 'accounts/successfull.html', {'name': name})
 
     return render(request, 'accounts/signup.html')
-
-
