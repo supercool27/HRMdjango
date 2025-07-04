@@ -14,6 +14,11 @@
             </div>
             <div class="card-body">
               <form method="post">
+                 {% if messages %}
+                                {% for message in messages %}
+                                    <div class="alert alert-danger">{{ message }}</div>
+                                {% endfor %}
+                            {% endif %}
                 {% csrf_token %}
                 <div class="mb-3">
                   <input type="text" name="username" class="form-control form-control-lg" placeholder="Username" required>
