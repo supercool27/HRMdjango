@@ -12,7 +12,11 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home),
     path('accounts/', include('accounts.urls')),
-    path('employees/', include('employees.urls')),  # Include employee URLs
+    path('employees/', include('employees.urls')),  
+    path('roles/', include('roles.urls')),
+    path('department/', include('department.urls')),
+
+    # Include employee URLs
     # path('employees/', include('employees.urls')),
     # path('attendance/', include('attendance.urls')),
     # path('leave/', include('leave.urls')),

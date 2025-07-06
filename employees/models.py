@@ -1,15 +1,31 @@
 from django.db import models
 from django.conf import settings
+from django.utils.text import slugify
+
+class Role(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    description = models.TextField(blank=True)
+
+    def __str__(self):
+        return self.name
+
+def employee_directory_path(instance, filename):
+    folder_name = slugify(instance.user.email.split('@')[0]) if instance.user.email else f"user_{instance.user.id}"
+    return f'employees/{folder_name}/{filename}'
 
 class Employee(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    
+    # models.py (Employee class ke andar)
+    role = models.ForeignKey(Role, on_delete=models.SET_NULL, null=True, blank=True)
+
 
     # Basic
     gender = models.CharField(max_length=10, choices=[("Male", "Male"), ("Female", "Female"), ("Other", "Other")])
     date_of_birth = models.DateField(null=True, blank=True)
     phone = models.CharField(max_length=15)
     alternate_phone = models.CharField(max_length=15, blank=True, null=True)
-    photo = models.ImageField(upload_to='employee_photos/', blank=True, null=True)
+    photo = models.ImageField(upload_to=employee_directory_path, blank=True, null=True)
 
     # Official
     employee_id = models.CharField(max_length=20, unique=True)
@@ -50,8 +66,9 @@ class Employee(models.Model):
     previous_designation = models.CharField(max_length=100, blank=True)
 
     # Files
-    resume = models.FileField(upload_to='employee_docs/', blank=True)
-    id_proof = models.FileField(upload_to='employee_docs/', blank=True)
+    resume = models.FileField(upload_to=employee_directory_path, blank=True)
+    id_proof = models.FileField(upload_to=employee_directory_path, blank=True)
 
     def __str__(self):
         return f"{self.user.get_full_name()} ({self.employee_id})"
+

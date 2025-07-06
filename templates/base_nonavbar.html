@@ -15,6 +15,25 @@
   <!-- Main CSS -->
   <link id="pagestyle" href="{% static 'assets/css/argon-dashboard.css' %}" rel="stylesheet" />
   <link id="pagestyle" href="{% static 'assets/css/common.css' %}" rel="stylesheet" />
+  <style>
+    .form-label {
+  margin-right: 10px;
+  font-weight: 500;
+}
+.form-control {
+  width: 100%;
+}
+label.form-label {
+  font-weight: 600;
+  font-size: 14px;
+}
+input.form-control,
+select.form-control,
+textarea.form-control {
+  font-size: 14px;
+  padding: 8px 12px;
+}
+  </style>
 </head>
 <body class="g-sidenav-show   bg-gray-100">
   <div class="min-height-300 bg-dark position-absolute w-100"></div>
@@ -52,9 +71,9 @@
         <div class="collapse" id="submenu-employees">
           <ul class="nav flex-column ms-3">
             <li class="nav-item"><a class="nav-link" href="/employees/add/">Add Employee</a></li>
-            <li class="nav-item"><a class="nav-link" href="/employees/">View Employees</a></li>
-            <li class="nav-item"><a class="nav-link" href="/employees/roles/">Employee Roles</a></li>
-            <li class="nav-item"><a class="nav-link" href="/employees/departments/">Departments</a></li>
+            <li class="nav-item"><a class="nav-link" href="/employees/list/">View Employees</a></li>
+            <li class="nav-item"><a class="nav-link" href="/roles/">Employee Roles</a></li>
+            <li class="nav-item"><a class="nav-link" href="/department/departments">Departments</a></li>
           </ul>
         </div>
       </li>

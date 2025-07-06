@@ -1,0 +1,49 @@
+{% extends 'base_nonavbar.html' %}
+{% load form_filters %}
+{% block title %}{{ form.instance.pk|yesno:"Edit Role,Add Role" }}{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-12 mx-auto">
+      <div class="card">
+        <div class="card-header pb-0">
+          <h5 class="mb-0">{{ form.instance.pk|yesno:"✏️ Edit Role,➕ Add Role" }}</h5>
+        </div>
+        <div class="card-body pt-3">
+          {% if messages %}
+            {% for msg in messages %}
+              <div class="alert alert-info">{{ msg }}</div>
+            {% endfor %}
+          {% endif %}
+
+          <form method="post">
+            {% csrf_token %}
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="id_name" class="form-label">Role Name</label>
+                {{ form.name|add_class:"form-control" }}
+                {% if form.name.errors %}
+                  <div class="text-danger small">{{ form.name.errors }}</div>
+                {% endif %}
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="id_description" class="form-label">Description</label>
+                {{ form.description|add_class:"form-control" }}
+                {% if form.description.errors %}
+                  <div class="text-danger small">{{ form.description.errors }}</div>
+                {% endif %}
+              </div>
+            </div>
+
+            <div class="text-center mt-4">
+              <button class="btn btn-dark w-100" type="submit">💾 Save Role</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+

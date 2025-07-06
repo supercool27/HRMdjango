@@ -18,6 +18,8 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'accounts',
     'employees',
+    'roles',
+    'department',
 ]
 
 MIDDLEWARE = [

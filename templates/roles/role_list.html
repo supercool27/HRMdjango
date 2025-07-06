@@ -1,0 +1,89 @@
+{% extends 'base_nonavbar.html' %}
+{% load form_filters %}
+{% block title %}Roles{% endblock %}
+{% block content %}
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-12">
+
+      <!-- Search and Add Role -->
+      <form method="get" class="d-flex mb-3">
+        <input type="text" name="q" class="form-control me-2" placeholder="Search role..." value="{{ query|default:'' }}">
+        <button class="btn btn-dark me-2" type="submit">Search</button>
+        <a href="{% url 'role_create' %}" class="btn btn-success ms-auto">➕ Add Role</a>
+      </form>
+
+      <!-- Role List Table -->
+      <div class="card">
+        <div class="card-header pb-0">
+          <h6 class="mb-0">📋 Role List</h6>
+        </div>
+        <div class="table-responsive">
+          <table class="table align-items-center mb-0">
+            <thead>
+              <tr>
+                <th class="text-uppercase text-secondary text-xs font-weight-bolder">Role Name</th>
+                <th class="text-uppercase text-secondary text-xs font-weight-bolder text-end">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for role in roles %}
+              <tr>
+                <td class="align-middle">
+                  {{ role.name }}
+                </td>
+                <td class="text-end">
+                  <a href="{% url 'role_edit' role.pk %}" class="btn btn-sm btn-info">✏️ Edit</a>
+                  <a href="{% url 'role_delete' role.pk %}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this role?')">🗑️ Delete</a>
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="2" class="text-center text-muted py-3">No roles found.</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Optional Pagination if used -->
+        {% if page_obj %}
+        <div class="card-footer py-3">
+          <nav aria-label="Role pagination">
+            <ul class="pagination pagination-dark justify-content-center mb-0">
+              {% if page_obj.has_previous %}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if query %}&q={{ query }}{% endif %}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                  </a>
+                </li>
+              {% else %}
+                <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+              {% endif %}
+
+              <li class="page-item disabled">
+                <span class="page-link bg-gradient-dark text-white px-4">
+                  Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                </span>
+              </li>
+
+              {% if page_obj.has_next %}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if query %}&q={{ query }}{% endif %}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+              {% else %}
+                <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+              {% endif %}
+            </ul>
+          </nav>
+        </div>
+        {% endif %}
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+

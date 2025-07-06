@@ -1,0 +1,21 @@
+{% extends "base_nonavbar.html" %}
+{% block title %}Delete Employee{% endblock %}
+{% block content %}
+<div class="container-fluid py-4">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card border-danger">
+        <div class="card-body text-center">
+          <h4>Are you sure you want to delete:</h4>
+          <h5 class="text-danger">{{ employee.user.get_full_name }} ({{ employee.employee_id }})</h5>
+          <form method="post">
+            {% csrf_token %}
+            <button class="btn btn-danger mt-3">Yes, Delete</button>
+            <a href="{% url 'employee_edit' employee.pk %}" class="btn btn-secondary mt-3">Cancel</a>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

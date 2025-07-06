@@ -1,0 +1,26 @@
+{% extends 'base_nonavbar.html' %}
+{% load form_filters %}
+{% block title %}Delete Department{% endblock %}
+{% block content %}
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-12 col-md-8 mx-auto">
+      <div class="card">
+        <div class="card-header pb-0">
+          <h6>🗑️ Confirm Deletion</h6>
+        </div>
+        <div class="card-body">
+          <p>Are you sure you want to delete the department <strong>"{{ department.name }}"</strong>?</p>
+          <form method="post">
+            {% csrf_token %}
+            <div class="d-flex justify-content-between">
+              <button type="submit" class="btn btn-danger">Yes, Delete</button>
+              <a href="{% url 'department_list' %}" class="btn btn-secondary">Cancel</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
