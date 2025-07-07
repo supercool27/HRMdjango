@@ -13,7 +13,10 @@
           <input type="text" name="q" class="form-control me-2" placeholder="🔎 Search role..." value="{{ query|default:'' }}">
           <button class="btn btn-dark" type="submit">Search</button>
         </form>
-        <a href="{% url 'role_create' %}" class="btn btn-success">➕ Add Role</a>
+        <a href="{% url 'role_create' %}" class="btn bg-gradient-primary text-white fw-bold shadow rounded-pill px-4 py-2">
+  ➕ Add Role
+</a>
+
       </div>
 
       <!-- Role List Card -->
