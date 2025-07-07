@@ -7,23 +7,17 @@
   <div class="row">
     <div class="col-12">
 
-      <!-- Search and Add Role -->
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <form method="get" class="d-flex w-100 me-3">
-          <input type="text" name="q" class="form-control me-2" placeholder="🔎 Search role..." value="{{ query|default:'' }}">
-          <button class="btn btn-dark" type="submit">Search</button>
-        </form>
-        <a href="{% url 'role_create' %}" class="btn bg-gradient-primary text-white fw-bold shadow rounded-pill px-4 py-2">
-  ➕ Add Role
-</a>
-
-      </div>
+      <!-- Search Form -->
+      <form method="get" class="d-flex mb-4">
+        <input type="text" name="q" class="form-control me-2" placeholder="🔎 Search role..." value="{{ query|default:'' }}">
+        <button class="btn btn-dark" type="submit">Search</button>
+      </form>
 
       <!-- Role List Card -->
       <div class="card shadow">
         <div class="card-header pb-0 d-flex justify-content-between align-items-center">
           <h6 class="mb-0">📋 Role List</h6>
-          <span class="text-sm text-muted">{{ roles|length }} Role{{ roles|length|pluralize }}</span>
+          <a href="{% url 'role_create' %}" class="btn btn-sm btn-primary">➕ Add New</a>
         </div>
 
         <!-- Table -->
@@ -31,8 +25,8 @@
           <table class="table table-hover align-items-center mb-0">
             <thead class="bg-light">
               <tr>
-                <th class="text-uppercase text-secondary text-xs font-weight-bold">Role Name</th>
-                <th class="text-uppercase text-secondary text-xs font-weight-bold text-end">Actions</th>
+                <th class="text-uppercase text-secondary text-sm font-weight-bolder">Role Name</th>
+                <th class="text-uppercase text-secondary text-sm font-weight-bolder text-end">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -57,29 +51,26 @@
 
         <!-- Pagination -->
         {% if page_obj %}
-        <div class="card-footer py-3">
-          <nav aria-label="Role pagination">
-            <ul class="pagination pagination-dark justify-content-center mb-0">
+        <div class="card-footer d-flex justify-content-between align-items-center">
+          <small class="text-muted">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</small>
+          <nav>
+            <ul class="pagination pagination-dark mb-0">
               {% if page_obj.has_previous %}
               <li class="page-item">
                 <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if query %}&q={{ query }}{% endif %}" aria-label="Previous">
-                  <span aria-hidden="true">&laquo;</span>
+                  &laquo;
                 </a>
               </li>
               {% else %}
               <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
               {% endif %}
 
-              <li class="page-item disabled">
-                <span class="page-link bg-gradient-dark text-white px-4">
-                  Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
-                </span>
-              </li>
+              <li class="page-item active"><span class="page-link">{{ page_obj.number }}</span></li>
 
               {% if page_obj.has_next %}
               <li class="page-item">
                 <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if query %}&q={{ query }}{% endif %}" aria-label="Next">
-                  <span aria-hidden="true">&raquo;</span>
+                  &raquo;
                 </a>
               </li>
               {% else %}
