@@ -1,6 +1,6 @@
 {% extends "base_nonavbar.html" %}
 {% load custom_tags %}
-{% block title %}Employee Add{% endblock %}
+{% block title %}Add Employee{% endblock %}
 {% block content %}
 <div class="container-fluid py-4">
   <div class="row">
@@ -21,90 +21,94 @@
             {% csrf_token %}
 
             <!-- Tabs Navigation -->
-            <ul class="nav nav-tabs mb-3" id="employeeFormTabs" role="tablist">
-              <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#personal">👤 Personal</button></li>
-              <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#official">💼 Official</button></li>
-              <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#address">🏠 Address</button></li>
-              <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#bank">🏦 Bank</button></li>
-              <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#education">🎓 Education</button></li>
+            <ul class="nav nav-tabs" id="employeeTab" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" id="personal-tab" data-bs-toggle="tab" href="#personal" role="tab">Personal</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="official-tab" data-bs-toggle="tab" href="#official" role="tab">Official</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="address-tab" data-bs-toggle="tab" href="#address" role="tab">Address</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="bank-tab" data-bs-toggle="tab" href="#bank" role="tab">Bank</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="education-tab" data-bs-toggle="tab" href="#education" role="tab">Education</a>
+              </li>
             </ul>
 
-            <div class="tab-content">
-              <!-- Personal Info -->
-              <div class="tab-pane fade show active" id="personal">
+            <!-- Tab Content -->
+            <div class="tab-content pt-3">
+              <!-- Personal Tab -->
+              <div class="tab-pane fade show active" id="personal" role="tabpanel">
                 <div class="row">
                   <div class="col-md-4 mb-3">
                     <label for="id_user">User</label>
                     {{ form.user|add_class:"form-control" }}
-                    {% if form.user.errors %}<div class="text-danger small">{{ form.user.errors }}</div>{% endif %}
                   </div>
-
                   {% for field in form %}
                     {% if field.name in 'gender date_of_birth phone alternate_phone blood_group marital_status nationality aadhaar_number pan_number passport_number photo' %}
                       <div class="col-md-4 mb-3">
                         <label for="{{ field.id_for_label }}">{{ field.label }}</label>
                         {{ field|add_class:"form-control" }}
-                        {% if field.errors %}<div class="text-danger small">{{ field.errors }}</div>{% endif %}
                       </div>
                     {% endif %}
                   {% endfor %}
                 </div>
               </div>
 
-              <!-- Official Info -->
-              <div class="tab-pane fade" id="official">
+              <!-- Official Tab -->
+              <div class="tab-pane fade" id="official" role="tabpanel">
                 <div class="row">
                   {% for field in form %}
                     {% if field.name in 'employee_id department designation date_of_joining employment_type work_location reporting_manager status' %}
                       <div class="col-md-4 mb-3">
                         <label for="{{ field.id_for_label }}">{{ field.label }}</label>
                         {{ field|add_class:"form-control" }}
-                        {% if field.errors %}<div class="text-danger small">{{ field.errors }}</div>{% endif %}
                       </div>
                     {% endif %}
                   {% endfor %}
                 </div>
               </div>
 
-              <!-- Address -->
-              <div class="tab-pane fade" id="address">
+              <!-- Address Tab -->
+              <div class="tab-pane fade" id="address" role="tabpanel">
                 <div class="row">
                   {% for field in form %}
                     {% if field.name in 'current_address permanent_address city state pincode' %}
                       <div class="col-md-6 mb-3">
                         <label for="{{ field.id_for_label }}">{{ field.label }}</label>
                         {{ field|add_class:"form-control" }}
-                        {% if field.errors %}<div class="text-danger small">{{ field.errors }}</div>{% endif %}
                       </div>
                     {% endif %}
                   {% endfor %}
                 </div>
               </div>
 
-              <!-- Bank -->
-              <div class="tab-pane fade" id="bank">
+              <!-- Bank Tab -->
+              <div class="tab-pane fade" id="bank" role="tabpanel">
                 <div class="row">
                   {% for field in form %}
                     {% if field.name in 'bank_name account_number ifsc_code branch' %}
                       <div class="col-md-4 mb-3">
                         <label for="{{ field.id_for_label }}">{{ field.label }}</label>
                         {{ field|add_class:"form-control" }}
-                        {% if field.errors %}<div class="text-danger small">{{ field.errors }}</div>{% endif %}
                       </div>
                     {% endif %}
                   {% endfor %}
                 </div>
               </div>
 
-              <!-- Education -->
-              <div class="tab-pane fade" id="education">
+              <!-- Education Tab -->
+              <div class="tab-pane fade" id="education" role="tabpanel">
                 <div class="row">
                   {% for field in form %}
                     {% if field.name in 'highest_qualification university total_experience previous_company previous_designation resume id_proof' %}
                       <div class="col-md-6 mb-3">
                         <label for="{{ field.id_for_label }}">{{ field.label }}</label>
                         {{ field|add_class:"form-control" }}
-                        {% if field.errors %}<div class="text-danger small">{{ field.errors }}</div>{% endif %}
                       </div>
                     {% endif %}
                   {% endfor %}
@@ -122,4 +126,16 @@
     </div>
   </div>
 </div>
+
+<script>
+  // Auto-activate bootstrap tab from link (if needed in the future)
+  const triggerTabList = document.querySelectorAll('#employeeTab a')
+  triggerTabList.forEach(triggerEl => {
+    const tabTrigger = new bootstrap.Tab(triggerEl)
+    triggerEl.addEventListener('click', event => {
+      event.preventDefault()
+      tabTrigger.show()
+    })
+  })
+</script>
 {% endblock %}
