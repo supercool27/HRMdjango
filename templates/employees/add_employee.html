@@ -1,7 +1,7 @@
 {% extends "base_nonavbar.html" %}
+{% load custom_tags %}
 {% block title %}Employee Add{% endblock %}
 {% block content %}
-{% load custom_tags %}
 <div class="container-fluid py-4">
   <div class="row">
     <div class="col-12 mx-auto">
@@ -20,107 +20,96 @@
           <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
 
-            <!-- Personal Information -->
-            <div class="row">
-              <div class="col-12">
-                <h6 class="text-uppercase text-secondary mt-3 mb-2">👤 Personal Information</h6>
-              </div>
+            <!-- Tabs Navigation -->
+            <ul class="nav nav-tabs mb-3" id="employeeFormTabs" role="tablist">
+              <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#personal">👤 Personal</button></li>
+              <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#official">💼 Official</button></li>
+              <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#address">🏠 Address</button></li>
+              <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#bank">🏦 Bank</button></li>
+              <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#education">🎓 Education</button></li>
+            </ul>
 
-              <div class="col-md-4 mb-3">
-                <label for="id_user" class="form-label">User</label>
-                {{ form.user|add_class:"form-control" }}
-                {% if form.user.errors %}
-                  <div class="text-danger small">{{ form.user.errors }}</div>
-                {% endif %}
-              </div>
-
-              {% for field in form %}
-                {% if field.name in 'gender date_of_birth phone alternate_phone blood_group marital_status nationality aadhaar_number pan_number passport_number photo' %}
+            <div class="tab-content">
+              <!-- Personal Info -->
+              <div class="tab-pane fade show active" id="personal">
+                <div class="row">
                   <div class="col-md-4 mb-3">
-                    <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
-                    {{ field|add_class:"form-control" }}
-                    {% if field.errors %}
-                      <div class="text-danger small">{{ field.errors }}</div>
-                    {% endif %}
+                    <label for="id_user">User</label>
+                    {{ form.user|add_class:"form-control" }}
+                    {% if form.user.errors %}<div class="text-danger small">{{ form.user.errors }}</div>{% endif %}
                   </div>
-                {% endif %}
-              {% endfor %}
-            </div>
 
-            <!-- Official Info -->
-            <div class="row">
-              <div class="col-12">
-                <h6 class="text-uppercase text-secondary mt-4 mb-2">💼 Official Details</h6>
+                  {% for field in form %}
+                    {% if field.name in 'gender date_of_birth phone alternate_phone blood_group marital_status nationality aadhaar_number pan_number passport_number photo' %}
+                      <div class="col-md-4 mb-3">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field|add_class:"form-control" }}
+                        {% if field.errors %}<div class="text-danger small">{{ field.errors }}</div>{% endif %}
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+                </div>
               </div>
 
-              {% for field in form %}
-                {% if field.name in 'employee_id department designation date_of_joining employment_type work_location reporting_manager status' %}
-                  <div class="col-md-4 mb-3">
-                    <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
-                    {{ field|add_class:"form-control" }}
-                    {% if field.errors %}
-                      <div class="text-danger small">{{ field.errors }}</div>
+              <!-- Official Info -->
+              <div class="tab-pane fade" id="official">
+                <div class="row">
+                  {% for field in form %}
+                    {% if field.name in 'employee_id department designation date_of_joining employment_type work_location reporting_manager status' %}
+                      <div class="col-md-4 mb-3">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field|add_class:"form-control" }}
+                        {% if field.errors %}<div class="text-danger small">{{ field.errors }}</div>{% endif %}
+                      </div>
                     {% endif %}
-                  </div>
-                {% endif %}
-              {% endfor %}
-            </div>
-
-            <!-- Address Info -->
-            <div class="row">
-              <div class="col-12">
-                <h6 class="text-uppercase text-secondary mt-4 mb-2">🏠 Address</h6>
+                  {% endfor %}
+                </div>
               </div>
 
-              {% for field in form %}
-                {% if field.name in 'current_address permanent_address city state pincode' %}
-                  <div class="col-md-6 mb-3">
-                    <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
-                    {{ field|add_class:"form-control" }}
-                    {% if field.errors %}
-                      <div class="text-danger small">{{ field.errors }}</div>
+              <!-- Address -->
+              <div class="tab-pane fade" id="address">
+                <div class="row">
+                  {% for field in form %}
+                    {% if field.name in 'current_address permanent_address city state pincode' %}
+                      <div class="col-md-6 mb-3">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field|add_class:"form-control" }}
+                        {% if field.errors %}<div class="text-danger small">{{ field.errors }}</div>{% endif %}
+                      </div>
                     {% endif %}
-                  </div>
-                {% endif %}
-              {% endfor %}
-            </div>
-
-            <!-- Bank Info -->
-            <div class="row">
-              <div class="col-12">
-                <h6 class="text-uppercase text-secondary mt-4 mb-2">🏦 Bank Details</h6>
+                  {% endfor %}
+                </div>
               </div>
 
-              {% for field in form %}
-                {% if field.name in 'bank_name account_number ifsc_code branch' %}
-                  <div class="col-md-4 mb-3">
-                    <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
-                    {{ field|add_class:"form-control" }}
-                    {% if field.errors %}
-                      <div class="text-danger small">{{ field.errors }}</div>
+              <!-- Bank -->
+              <div class="tab-pane fade" id="bank">
+                <div class="row">
+                  {% for field in form %}
+                    {% if field.name in 'bank_name account_number ifsc_code branch' %}
+                      <div class="col-md-4 mb-3">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field|add_class:"form-control" }}
+                        {% if field.errors %}<div class="text-danger small">{{ field.errors }}</div>{% endif %}
+                      </div>
                     {% endif %}
-                  </div>
-                {% endif %}
-              {% endfor %}
-            </div>
-
-            <!-- Education & Docs -->
-            <div class="row">
-              <div class="col-12">
-                <h6 class="text-uppercase text-secondary mt-4 mb-2">🎓 Education & Documents</h6>
+                  {% endfor %}
+                </div>
               </div>
 
-              {% for field in form %}
-                {% if field.name in 'highest_qualification university total_experience previous_company previous_designation resume id_proof' %}
-                  <div class="col-md-6 mb-3">
-                    <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
-                    {{ field|add_class:"form-control" }}
-                    {% if field.errors %}
-                      <div class="text-danger small">{{ field.errors }}</div>
+              <!-- Education -->
+              <div class="tab-pane fade" id="education">
+                <div class="row">
+                  {% for field in form %}
+                    {% if field.name in 'highest_qualification university total_experience previous_company previous_designation resume id_proof' %}
+                      <div class="col-md-6 mb-3">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field|add_class:"form-control" }}
+                        {% if field.errors %}<div class="text-danger small">{{ field.errors }}</div>{% endif %}
+                      </div>
                     {% endif %}
-                  </div>
-                {% endif %}
-              {% endfor %}
+                  {% endfor %}
+                </div>
+              </div>
             </div>
 
             <div class="text-center mt-4">
@@ -133,7 +122,4 @@
     </div>
   </div>
 </div>
-
-
-
 {% endblock %}
