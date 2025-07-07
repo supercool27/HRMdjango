@@ -1,98 +1,141 @@
-{% extends 'base_nonavbar.html' %}
-{% block title %} Employee Add {% endblock %}
+{% extends "base_nonavbar.html" %}
+{% load custom_tags %}
+{% block title %}Add Employee{% endblock %}
 {% block content %}
 <div class="container-fluid py-4">
   <div class="row">
-    <div class="col-12">
-      <form method="get" class="d-flex mb-3">
-        <input type="text" name="q" class="form-control me-2" placeholder="Search by name..." value="{{ query|default:'' }}">
-        <button class="btn btn-dark" type="submit">Search</button>
-      </form>
-
+    <div class="col-12 mx-auto">
       <div class="card">
         <div class="card-header pb-0">
-          <h6>Employee List</h6>
+          <h5 class="mb-0">Add New Employee</h5>
         </div>
-        <div class="table-responsive">
-          <table class="table align-items-center mb-0">
-            <thead>
-              <tr>
-                <th>Employee ID</th>
-                <th>Name</th>
-                <th>Department</th>
-                <th>Status</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for emp in page_obj %}
-              <tr>
-                <td>{{ emp.employee_id }}</td>
-                <td>{{ emp.user.get_full_name }}</td>
-                <td>{{ emp.department }}</td>
-                <td>{{ emp.status }}</td>
-                <td>{% if employee.pk %}
-  <a href="{% url 'employee_edit' employee.pk %}" class="btn btn-sm btn-info">✏️ Edit</a>
-  <a href="{% url 'employee_delete' employee.pk %}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">🗑️ Delete</a>
-{% else %}
-  <span class="text-danger">Invalid Employee</span>
-{% endif %}</td>
-              </tr>
-              {% empty %}
-              <tr>
-                <td colspan="4">No employees found.</td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
+        <div class="card-body pt-3">
+
+          {% if messages %}
+            {% for msg in messages %}
+              <div class="alert alert-info">{{ msg }}</div>
+            {% endfor %}
+          {% endif %}
+
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <!-- Tabs Navigation -->
+            <ul class="nav nav-tabs" id="employeeTab" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" id="personal-tab" data-bs-toggle="tab" href="#personal" role="tab">Personal</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="official-tab" data-bs-toggle="tab" href="#official" role="tab">Official</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="address-tab" data-bs-toggle="tab" href="#address" role="tab">Address</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="bank-tab" data-bs-toggle="tab" href="#bank" role="tab">Bank</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="education-tab" data-bs-toggle="tab" href="#education" role="tab">Education</a>
+              </li>
+            </ul>
+
+            <!-- Tab Content -->
+            <div class="tab-content pt-3">
+              <!-- Personal Tab -->
+              <div class="tab-pane fade show active" id="personal" role="tabpanel">
+                <div class="row">
+                  <div class="col-md-4 mb-3">
+                    <label for="id_user">User</label>
+                    {{ form.user|add_class:"form-control" }}
+                  </div>
+                  {% for field in form %}
+                    {% if field.name in 'gender date_of_birth phone alternate_phone blood_group marital_status nationality aadhaar_number pan_number passport_number photo' %}
+                      <div class="col-md-4 mb-3">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field|add_class:"form-control" }}
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+              </div>
+
+              <!-- Official Tab -->
+              <div class="tab-pane fade" id="official" role="tabpanel">
+                <div class="row">
+                  {% for field in form %}
+                    {% if field.name in 'employee_id department designation date_of_joining employment_type work_location reporting_manager status' %}
+                      <div class="col-md-4 mb-3">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field|add_class:"form-control" }}
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+              </div>
+
+              <!-- Address Tab -->
+              <div class="tab-pane fade" id="address" role="tabpanel">
+                <div class="row">
+                  {% for field in form %}
+                    {% if field.name in 'current_address permanent_address city state pincode' %}
+                      <div class="col-md-6 mb-3">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field|add_class:"form-control" }}
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+              </div>
+
+              <!-- Bank Tab -->
+              <div class="tab-pane fade" id="bank" role="tabpanel">
+                <div class="row">
+                  {% for field in form %}
+                    {% if field.name in 'bank_name account_number ifsc_code branch' %}
+                      <div class="col-md-4 mb-3">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field|add_class:"form-control" }}
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+              </div>
+
+              <!-- Education Tab -->
+              <div class="tab-pane fade" id="education" role="tabpanel">
+                <div class="row">
+                  {% for field in form %}
+                    {% if field.name in 'highest_qualification university total_experience previous_company previous_designation resume id_proof' %}
+                      <div class="col-md-6 mb-3">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field|add_class:"form-control" }}
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+
+            <div class="text-center mt-4">
+              <button class="btn btn-dark w-100" type="submit">💾 Save Employee</button>
+            </div>
+          </form>
+
         </div>
-
-    <div class="card-footer py-3">
-<nav aria-label="Page navigation example">
-<ul class="pagination pagination-dark justify-content-center mb-0">
-  {% if page_obj.has_previous %}
-    <li class="page-item">
-      <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if query %}&q={{ query }}{% endif %}" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-        <span class="sr-only">Previous</span>
-      </a>
-    </li>
-  {% else %}
-    <li class="page-item disabled">
-      <span class="page-link">
-        <span aria-hidden="true">&laquo;</span>
-        <span class="sr-only">Previous</span>
-      </span>
-    </li>
-  {% endif %}
-
-  <li class="page-item disabled">
-    <span class="page-link bg-gradient-dark text-white px-4">
-      Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
-    </span>
-  </li>
-
-  {% if page_obj.has_next %}
-    <li class="page-item">
-      <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if query %}&q={{ query }}{% endif %}" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-        <span class="sr-only">Next</span>
-      </a>
-    </li>
-  {% else %}
-    <li class="page-item disabled">
-      <span class="page-link">
-        <span aria-hidden="true">&raquo;</span>
-        <span class="sr-only">Next</span>
-      </span>
-    </li>
-  {% endif %}
-</ul>
-</nav>
-</div>
-
       </div>
     </div>
   </div>
 </div>
+
+<script>
+  // Auto-activate bootstrap tab from link (if needed in the future)
+  const triggerTabList = document.querySelectorAll('#employeeTab a')
+  triggerTabList.forEach(triggerEl => {
+    const tabTrigger = new bootstrap.Tab(triggerEl)
+    triggerEl.addEventListener('click', event => {
+      event.preventDefault()
+      tabTrigger.show()
+    })
+  })
+</script>
 {% endblock %}
