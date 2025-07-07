@@ -1,64 +1,70 @@
 {% extends 'base_nonavbar.html' %}
 {% load form_filters %}
 {% block title %}Roles{% endblock %}
+
 {% block content %}
 <div class="container-fluid py-4">
   <div class="row">
     <div class="col-12">
 
       <!-- Search and Add Role -->
-      <form method="get" class="d-flex mb-3">
-        <input type="text" name="q" class="form-control me-2" placeholder="Search role..." value="{{ query|default:'' }}">
-        <button class="btn btn-dark me-2" type="submit">Search</button>
-        <a href="{% url 'role_create' %}" class="btn btn-success ms-auto">➕ Add Role</a>
-      </form>
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <form method="get" class="d-flex w-100 me-3">
+          <input type="text" name="q" class="form-control me-2" placeholder="🔎 Search role..." value="{{ query|default:'' }}">
+          <button class="btn btn-dark" type="submit">Search</button>
+        </form>
+        <a href="{% url 'role_create' %}" class="btn btn-success">➕ Add Role</a>
+      </div>
 
-      <!-- Role List Table -->
-      <div class="card">
-        <div class="card-header pb-0">
+      <!-- Role List Card -->
+      <div class="card shadow">
+        <div class="card-header pb-0 d-flex justify-content-between align-items-center">
           <h6 class="mb-0">📋 Role List</h6>
+          <span class="text-sm text-muted">{{ roles|length }} Role{{ roles|length|pluralize }}</span>
         </div>
-        <div class="table-responsive">
-          <table class="table align-items-center mb-0">
-            <thead>
+
+        <!-- Table -->
+        <div class="table-responsive p-3">
+          <table class="table table-hover align-items-center mb-0">
+            <thead class="bg-light">
               <tr>
-                <th class="text-uppercase text-secondary text-xs font-weight-bolder">Role Name</th>
-                <th class="text-uppercase text-secondary text-xs font-weight-bolder text-end">Actions</th>
+                <th class="text-uppercase text-secondary text-xs font-weight-bold">Role Name</th>
+                <th class="text-uppercase text-secondary text-xs font-weight-bold text-end">Actions</th>
               </tr>
             </thead>
             <tbody>
               {% for role in roles %}
               <tr>
                 <td class="align-middle">
-                  {{ role.name }}
+                  <strong>{{ role.name }}</strong>
                 </td>
                 <td class="text-end">
-                  <a href="{% url 'role_edit' role.pk %}" class="btn btn-sm btn-info">✏️ Edit</a>
-                  <a href="{% url 'role_delete' role.pk %}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this role?')">🗑️ Delete</a>
+                  <a href="{% url 'role_edit' role.pk %}" class="btn btn-sm btn-outline-info me-2" title="Edit Role">✏️ Edit</a>
+                  <a href="{% url 'role_delete' role.pk %}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure you want to delete this role?')" title="Delete Role">🗑️ Delete</a>
                 </td>
               </tr>
               {% empty %}
               <tr>
-                <td colspan="2" class="text-center text-muted py-3">No roles found.</td>
+                <td colspan="2" class="text-center text-muted py-4">🙁 No roles found.</td>
               </tr>
               {% endfor %}
             </tbody>
           </table>
         </div>
 
-        <!-- Optional Pagination if used -->
+        <!-- Pagination -->
         {% if page_obj %}
         <div class="card-footer py-3">
           <nav aria-label="Role pagination">
             <ul class="pagination pagination-dark justify-content-center mb-0">
               {% if page_obj.has_previous %}
-                <li class="page-item">
-                  <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if query %}&q={{ query }}{% endif %}" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                  </a>
-                </li>
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if query %}&q={{ query }}{% endif %}" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
               {% else %}
-                <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+              <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
               {% endif %}
 
               <li class="page-item disabled">
@@ -68,13 +74,13 @@
               </li>
 
               {% if page_obj.has_next %}
-                <li class="page-item">
-                  <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if query %}&q={{ query }}{% endif %}" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                  </a>
-                </li>
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if query %}&q={{ query }}{% endif %}" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
               {% else %}
-                <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+              <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
               {% endif %}
             </ul>
           </nav>
@@ -86,4 +92,3 @@
   </div>
 </div>
 {% endblock %}
-
