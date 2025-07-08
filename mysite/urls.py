@@ -8,6 +8,9 @@ from django.conf import settings
 def home(request):
     return HttpResponse("<h1>Welcome to Railway Django Deployment Welcome in home Brother !</h1>")
 
+def trigger_error(request):
+    division_by_zero = 1 / 0
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home),
@@ -17,6 +20,7 @@ urlpatterns = [
     path('department/', include('department.urls')),
     path('attendance/', include('attendance.urls')),
     path('leave/', include('leave.urls')),
+    path('sentry-debug/', trigger_error),
 
 
     # Include employee URLs

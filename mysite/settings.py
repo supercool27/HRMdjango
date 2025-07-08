@@ -1,5 +1,13 @@
 import os
 from pathlib import Path
+import sentry_sdk
+
+sentry_sdk.init(
+    dsn="https://4224f1a67deb2fd005c4db65fb9a981b@o4509632723484672.ingest.de.sentry.io/4509632727482448",
+    # Add data like request headers and IP for users,
+    # see https://docs.sentry.io/platforms/python/data-management/data-collected/ for more info
+    send_default_pii=True,
+)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-gO1pHXkcubPQ1ZtkCcGsueFLQRHMe3dHkXwqWYpb2eNoMmKHRDTh1hWdJRLXBMF1w4g'
