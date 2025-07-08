@@ -1,0 +1,89 @@
+{% extends 'base_nonavbar.html' %}
+{% block title %}Leave Report{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+  <div class="card shadow rounded-4">
+    <div class="card-header bg-dark text-white rounded-top-4">
+      <h5 class="text-white">📊 Leave Report</h5>
+      <form method="get" class="row mt-2">
+        <div class="col-md-4">
+          <input type="month" name="month" value="{{ selected_month }}" class="form-control rounded-3">
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-light w-100 rounded-3">📅 View</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="card-body table-responsive">
+      <table class="table table-bordered table-hover text-center small shadow-sm">
+        <thead class="table-dark sticky-top">
+          <tr>
+            <th class="bg-dark text-white">👤 Employee</th>
+            {% for day in days_range %}
+              <th class="bg-dark text-white">{{ day }}</th>
+            {% endfor %}
+            <th class="bg-dark text-white">Total Leaves</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in page_obj %}
+            <tr>
+              <td class="text-start fw-bold">{{ row.employee.user.get_full_name }}</td>
+              {% for status in row.days %}
+                <td>
+                  {% if status == "L" %}
+                    🟡
+                  {% else %}
+                    -
+                  {% endif %}
+                </td>
+              {% endfor %}
+              <td>{{ row.total_leaves }}</td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="{{ days_range|length|add:"2" }}">No leave data available.</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <!-- Pagination -->
+      <div class="card-footer d-flex justify-content-between align-items-center">
+        <small class="text-muted">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</small>
+        <nav>
+          <ul class="pagination pagination-dark mb-0">
+            {% if page_obj.has_previous %}
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}&month={{ selected_month }}">&laquo;</a>
+              </li>
+            {% else %}
+              <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+            {% endif %}
+
+            <li class="page-item active"><span class="page-link">{{ page_obj.number }}</span></li>
+
+            {% if page_obj.has_next %}
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}&month={{ selected_month }}">&raquo;</a>
+              </li>
+            {% else %}
+              <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+            {% endif %}
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  thead th {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+</style>
+{% endblock %}

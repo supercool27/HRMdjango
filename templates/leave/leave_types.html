@@ -1,0 +1,24 @@
+{% extends 'base_nonavbar.html' %}
+{% load form_filters %}
+{% block title %}Leave Types{% endblock %}
+{% block content %}
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header">
+      <h5 class="text-white">🏷️ Leave Types</h5>
+    </div>
+    <div class="card-body">
+      <ul class="list-group">
+        {% for lt in types %}
+          <li class="list-group-item">
+            <strong>{{ lt.name }}</strong><br>
+            <small>{{ lt.description }}</small>
+          </li>
+        {% empty %}
+          <li class="list-group-item text-muted">No leave types found.</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}

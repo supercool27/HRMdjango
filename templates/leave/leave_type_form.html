@@ -1,0 +1,26 @@
+{% extends 'base_nonavbar.html' %}
+{% load form_filters %}
+{% block title %}{{ form.instance.pk|yesno:"Edit Leave Type,Add Leave Type" }}{% endblock %}
+{% block content %}
+<div class="container mt-4">
+  <div class="card shadow rounded-4">
+    <div class="card-header bg-dark text-white">
+      <h5>{{ form.instance.pk|yesno:"✏️ Edit Leave Type,➕ Add Leave Type" }}</h5>
+    </div>
+    <div class="card-body">
+      <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="id_name">Name</label>
+          {{ form.name|add_class:"form-control" }}
+        </div>
+        <div class="mb-3">
+          <label for="id_description">Description</label>
+          {{ form.description|add_class:"form-control" }}
+        </div>
+        <button type="submit" class="btn btn-dark w-100">💾 Save</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

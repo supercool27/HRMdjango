@@ -20,6 +20,9 @@ INSTALLED_APPS = [
     'employees',
     'roles',
     'department',
+    'attendance',
+    'leave',
+
 ]
 
 MIDDLEWARE = [

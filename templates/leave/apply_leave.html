@@ -1,0 +1,51 @@
+{% extends "base_nonavbar.html" %}
+{% load custom_tags %}
+{% block title %}Apply Leave{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-12 mx-auto">
+      <div class="card">
+        <div class="card-header pb-0">
+          <h5 class="mb-0">📝 Apply for Leave</h5>
+        </div>
+        <div class="card-body pt-3">
+          
+          {% if messages %}
+            {% for msg in messages %}
+              <div class="alert alert-info">{{ msg }}</div>
+            {% endfor %}
+          {% endif %}
+
+          <form method="post">
+            {% csrf_token %}
+            <div class="row">
+              <div class="col-md-4 mb-3">
+                <label for="{{ form.leave_type.id_for_label }}">Leave Type</label>
+                {{ form.leave_type|add_class:"form-control" }}
+              </div>
+              <div class="col-md-4 mb-3">
+                <label for="{{ form.start_date.id_for_label }}">Start Date</label>
+                {{ form.start_date|add_class:"form-control" }}
+              </div>
+              <div class="col-md-4 mb-3">
+                <label for="{{ form.end_date.id_for_label }}">End Date</label>
+                {{ form.end_date|add_class:"form-control" }}
+              </div>
+              <div class="col-md-12 mb-3">
+                <label for="{{ form.reason.id_for_label }}">Reason</label>
+                {{ form.reason|add_class:"form-control" }}
+              </div>
+            </div>
+            <div class="text-center mt-4">
+              <button class="btn btn-dark w-100" type="submit">💾 Submit Leave Request</button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

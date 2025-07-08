@@ -1,0 +1,38 @@
+{% extends 'base_nonavbar.html' %}
+{% load form_filters %}
+{% block title %}Mark Attendance{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header">
+      <h5>🕒 Mark Attendance</h5>
+    </div>
+    <div class="card-body">
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-info">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+      <form method="post">
+        {% csrf_token %}
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <label>Employee</label>
+            {{ form.employee|add_class:"form-control" }}
+          </div>
+          <div class="col-md-4 mb-3">
+            <label>Date</label>
+            {{ form.date|add_class:"form-control" }}
+          </div>
+          <div class="col-md-4 mb-3">
+            <label>Status</label>
+            {{ form.status|add_class:"form-control" }}
+          </div>
+        </div>
+        <button class="btn btn-dark w-100" type="submit">💾 Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

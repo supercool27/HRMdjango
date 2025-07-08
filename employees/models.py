@@ -14,7 +14,7 @@ def employee_directory_path(instance, filename):
     return f'employees/{folder_name}/{filename}'
 
 class Employee(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,related_name='hr_employee')
     
     # models.py (Employee class ke andar)
     role = models.ForeignKey(Role, on_delete=models.SET_NULL, null=True, blank=True)

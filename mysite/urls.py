@@ -15,6 +15,9 @@ urlpatterns = [
     path('employees/', include('employees.urls')),  
     path('roles/', include('roles.urls')),
     path('department/', include('department.urls')),
+    path('attendance/', include('attendance.urls')),
+    path('leave/', include('leave.urls')),
+
 
     # Include employee URLs
     # path('employees/', include('employees.urls')),
