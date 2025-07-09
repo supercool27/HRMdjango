@@ -41,7 +41,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    "django.contrib.messages.middleware.MessageMiddleware",
     'mysite.middleware.LoginRequiredMiddleware',
 ]
 
