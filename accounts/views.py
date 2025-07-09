@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
+import sentry_sdk
 
 def login_view(request):
     if request.method == "POST":
@@ -17,6 +18,9 @@ def login_view(request):
             messages.success(request, "🎉 Logged in successfully!")
             return redirect('dashboard')  # your dashboard url name
         else:
+            sentry_sdk.capture_message(
+                f"Failed login attempt for username: {username}"
+            )
             messages.error(request, "⚠️ Invalid username or password.")
 
     return render(request, "accounts/login.html")
