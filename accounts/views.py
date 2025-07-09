@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 import sentry_sdk
 
-def login_view(request):
+def login_vie(request):
     if request.method == "POST":
         username = request.POST.get("username")
         password = request.POST.get("password")
