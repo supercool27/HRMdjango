@@ -62,6 +62,6 @@ def register_view(request):
         )
 
         messages.success(request, "🎉 Registration successful!")
-        return render(request, 'accounts/successfull.html', {'name': name})
+        return render(request, 'accounts/login.html', {'name': name})
 
     return render(request, 'accounts/signup.html')
