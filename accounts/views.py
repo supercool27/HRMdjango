@@ -21,7 +21,7 @@ def login_view(request):
 
     return render(request, "accounts/login.html")
 
-@login_required
+
 def dashboard_view(request):
     return render(request, 'accounts/dashboard.html')
 
