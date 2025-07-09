@@ -15,6 +15,9 @@ def login_view(request):
         
         if user is not None:
             login(request, user)
+            sentry_sdk.capture_message(
+                f"successfully login attempt for username: {username}"
+            )
             messages.success(request, "🎉 Logged in successfully!")
             return redirect('dashboard')  # your dashboard url name
         else:
