@@ -4,6 +4,8 @@ from django.http import HttpResponse
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
+from leave.views import no_permission
+from accounts.views import logout_view
 
 def home(request):
     return HttpResponse("<h1>Welcome to Railway Django Deployment Welcome in home Brother !</h1>")
@@ -21,6 +23,8 @@ urlpatterns = [
     path('attendance/', include('attendance.urls')),
     path('leave/', include('leave.urls')),
     path('sentry-debug/', trigger_error),
+    path('no-permission/', no_permission, name='no_permission'),
+    path('logout/', logout_view, name='logout')
 
 
     # Include employee URLs

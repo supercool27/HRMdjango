@@ -5,6 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 import sentry_sdk
+from django.contrib.auth import logout
+from django.contrib import messages
 
 def login_view(request):
     if request.method == "POST":
@@ -72,3 +74,8 @@ def register_view(request):
         return render(request, 'accounts/login.html', {'name': name})
 
     return render(request, 'accounts/signup.html')
+
+def logout_view(request):
+    logout(request)
+    messages.success(request, "You have been logged out successfully.")
+    return redirect('login')
