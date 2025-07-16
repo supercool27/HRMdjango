@@ -11,6 +11,7 @@ class Employee(models.Model):
     def __str__(self):
         return self.user.get_full_name()
 
+
 class SalaryStructure(models.Model):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
     basic = models.FloatField()
